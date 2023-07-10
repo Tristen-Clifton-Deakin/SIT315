@@ -1,16 +1,19 @@
-int PIRpin = 1;
-int VIBpin = 2;
+int PIRpin = 2;
+int VIBpin = 3;
+int alert = 0;
 
 void setup()
 {
+  Serial.begin(9600);
   pinMode(PIRpin, INPUT);
   pinMode(VIBpin, OUTPUT);
-  digitalWrite(VIBpin,LOW);  
 }
 
 void loop()
 {
-  int alert = digitalRead(PIRpin);
+  alert = digitalRead(PIRpin);
+  Serial.print("sensor: ");
+  Serial.println(alert);
     
   if (alert == HIGH)
   {
