@@ -1,0 +1,26 @@
+int PIRpin = 1;
+int VIBpin = 2;
+
+void setup()
+{
+  pinMode(PIRpin, INPUT);
+  pinMode(VIBpin, OUTPUT);
+  digitalWrite(VIBpin,LOW);  
+}
+
+void loop()
+{
+  int alert = digitalRead(PIRpin);
+    
+  if (alert == HIGH)
+  {
+    digitalWrite(VIBpin,HIGH);
+  }
+  if (alert == LOW)
+  { 
+    digitalWrite(VIBpin,LOW);
+    
+  }
+  
+  delay(100);
+}
