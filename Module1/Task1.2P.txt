@@ -1,0 +1,23 @@
+int PIRpin = 2;
+int VIBpin = 3;
+volatile byte alert = LOW;
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(PIRpin, INPUT);
+  pinMode(VIBpin, OUTPUT);
+  attachInterrupt(digitalPinToInterrupt(PIRpin), TriggerAlert, CHANGE);
+}
+
+void loop()
+{
+  Serial.print("sensor: ");
+  Serial.println(alert);
+  digitalWrite(VIBpin,alert);
+  delay(100);
+}
+
+void TriggerAlert() {
+  alert = !alert;
+}
