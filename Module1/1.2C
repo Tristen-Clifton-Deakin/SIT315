@@ -1,0 +1,56 @@
+const byte button1 = 11;
+const byte button2 = 12;
+const byte button3 = 13;
+const byte led1 = 2;
+const byte led2 = 3;
+const byte led3 = 4;
+volatile byte button1state = LOW;
+volatile byte button2state = LOW;
+volatile byte button3state = LOW;
+
+
+
+void setup()
+{
+  Serial.begin(9600);
+  PCICR |= B00000001;
+  PCMSK0 |= B00111000;
+  pinMode(button1, INPUT);
+  pinMode(button2, INPUT);
+  pinMode(button3, INPUT);
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(led3, OUTPUT);
+  digitalWrite(led1,LOW);
+  digitalWrite(led2,LOW);
+  digitalWrite(led3,LOW);
+}
+
+void loop()
+{
+  Serial.println(
+    "Button 1 State : "+ CheckState(button1state)+", "+
+    "Button 2 State : "+ CheckState(button2state)+", "+       
+    "Button 3 State : "+ CheckState(button3state));
+  delay(500);
+}
+
+String CheckState(byte state){
+  if(state == HIGH){
+  	return("HIGH");
+  }else return("LOW");
+}
+
+
+
+
+ISR (PCINT0_vect)
+{
+  button1state = digitalRead(button1);  
+  digitalWrite(led1, button1state);
+  button2state = digitalRead(button2);  
+  digitalWrite(led2, button2state);
+  button3state = digitalRead(button3);  
+  digitalWrite(led3, button3state);
+}
+
